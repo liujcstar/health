@@ -1,0 +1,67 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.mapper.CheckGroupMapper">
+
+    <select id="findPage" parameterType="string" resultType="checkGroup">
+        SELECT * from t_checkgroup
+        <if test="value != null and value.length > 0">
+            where code = #{value} or name like concat('%',#{value},'%') or helpCode like concat('%',#{value},'%')
+        </if>
+    </select>
+
+    <insert id="addCheckGroup" parameterType="checkGroup">
+
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            select last_insert_id();
+        </selectKey>
+        insert into t_checkgroup values (null,#{code},#{name},#{helpCode},#{sex},#{remark},#{attention})
+    </insert>
+
+    <!--为中间表添加数据-->
+    <insert id="addByCheckItemId">
+        insert into t_checkgroup_checkitem values(#{checkgroupId},#{checkitemId});
+    </insert>
+
+    <!--根据id查询检查组信息-->
+    <select id="findById" parameterType="int" resultType="checkGroup">
+        select * from t_checkgroup where id = #{id}
+    </select>
+
+    <!--根据检查组id查询检查项id-->
+    <select id="findCheckItemIdByCheckGroupId" parameterType="int" resultType="int">
+        select checkitem_id from t_checkgroup_checkitem where checkgroup_id = #{id}
+    </select>
+
+    <!--动态更新检查组数据-->
+    <select id="updateCheckgroup" parameterType="checkGroup">
+        update t_checkgroup
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="code != null">
+                code = #{code},
+            </if>
+
+            <if test="helpCode != null">
+                helpCode = #{helpCode},
+            </if>
+            <if test="attention != null">
+                attention = #{attention},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+        </set>
+        where id = #{id}
+    </select>
+
+    <!--删除中间表关联关系-->
+    <delete id="deleteAssociation" parameterType="int">
+        delete from t_checkgroup_checkitem where checkgroup_id = #{checkgroupId}
+    </delete>
+</mapper>
