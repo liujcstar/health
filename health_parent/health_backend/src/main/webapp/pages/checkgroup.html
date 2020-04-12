@@ -398,6 +398,8 @@
                         type: 'info',
                         message: '已取消删除'
                     });
+                }).finally(()=>{
+                    this.findPage()
                 });
 
             }
