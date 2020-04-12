@@ -81,4 +81,21 @@ public class CheckGroupController {
             return new Result(false, MessageConstant.EDIT_CHECKGROUP_FAIL);
         }
     }
+
+
+    /**
+     * 根据id删除检查组
+     * @param id
+     * @return
+     */
+    @RequestMapping("/deleteById")
+    public Result deleteById(int id) {
+        try {
+            checkGroupService.deleteById(id);
+            return new Result(true, MessageConstant.DELETE_CHECKGROUP_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.DELETE_CHECKGROUP_FAIL);
+        }
+    }
 }

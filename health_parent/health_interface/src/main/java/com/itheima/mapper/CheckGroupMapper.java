@@ -22,4 +22,6 @@ public interface CheckGroupMapper {
     void updateCheckgroup(CheckGroup checkGroup);
 
     void deleteAssociation(Integer checkgroupId);
+
+    void deleteCheckgroup(int id);
 }

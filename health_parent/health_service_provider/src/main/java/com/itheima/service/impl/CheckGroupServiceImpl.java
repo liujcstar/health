@@ -94,6 +94,18 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     }
 
     /**
+     * 根据id删除检查组
+     * @param id
+     */
+    @Override
+    public void deleteById(int id) {
+        //删除关联关系
+        mapper.deleteAssociation(id);
+        //删除检查组
+        mapper.deleteCheckgroup(id);
+    }
+
+    /**
      * 添加关联关系
      * @param checkgroupId
      * @param checkitemIds

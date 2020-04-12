@@ -64,4 +64,9 @@
     <delete id="deleteAssociation" parameterType="int">
         delete from t_checkgroup_checkitem where checkgroup_id = #{checkgroupId}
     </delete>
+
+    <!--删除中间表关联关系-->
+    <delete id="deleteAssociation" parameterType="int">
+        delete from t_checkgroup where id = #{id}
+    </delete>
 </mapper>
