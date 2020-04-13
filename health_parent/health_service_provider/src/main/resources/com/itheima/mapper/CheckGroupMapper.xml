@@ -65,8 +65,13 @@
         delete from t_checkgroup_checkitem where checkgroup_id = #{checkgroupId}
     </delete>
 
-    <!--删除中间表关联关系-->
+    <!--删除检查组-->
     <delete id="deleteCheckgroup" parameterType="int">
         delete from t_checkgroup where id = #{id}
     </delete>
+
+    <!--查询所有检查组-->
+    <select id="findAll"  resultType="checkGroup">
+        select * from t_checkgroup
+    </select>
 </mapper>

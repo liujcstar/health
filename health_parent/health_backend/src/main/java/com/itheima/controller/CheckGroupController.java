@@ -42,12 +42,14 @@ public class CheckGroupController {
     public Result findById(Integer id) {
         try {
             CheckGroup checkGroup = checkGroupService.findById(id);
+
             return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS,checkGroup);
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false, MessageConstant.QUERY_CHECKGROUP_FAIL);
         }
     }
+
 
     /**
      * 查询中间表信息
@@ -96,6 +98,20 @@ public class CheckGroupController {
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false, MessageConstant.DELETE_CHECKGROUP_FAIL);
+        }
+    }
+
+    /**
+     * 查询全部检查组信息
+     */
+    @RequestMapping("/findAll")
+    public Result findAll() {
+        try {
+            List<CheckGroup> checkGroups = checkGroupService.findAll();
+            return new Result(true,MessageConstant.QUERY_CHECKGROUP_SUCCESS,checkGroups);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(true,MessageConstant.QUERY_CHECKGROUP_FAIL);
         }
     }
 }

@@ -106,6 +106,15 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     }
 
     /**
+     * 查询所有检查组
+     * @return
+     */
+    @Override
+    public List<CheckGroup> findAll() {
+        return  mapper.findAll();
+    }
+
+    /**
      * 添加关联关系
      * @param checkgroupId
      * @param checkitemIds
