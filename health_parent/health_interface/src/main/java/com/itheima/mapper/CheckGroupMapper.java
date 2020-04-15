@@ -26,4 +26,8 @@ public interface CheckGroupMapper {
     void deleteCheckgroup(int id);
 
     List<CheckGroup> findAll();
+
+    List<Integer> findSetmealByCheckgroupId(Integer checkgroupId);
+
+    void deleteSetmealByCheckgroupId(Integer checkgroupId);
 }

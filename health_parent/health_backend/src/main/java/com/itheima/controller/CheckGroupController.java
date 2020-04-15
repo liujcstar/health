@@ -111,7 +111,35 @@ public class CheckGroupController {
             return new Result(true,MessageConstant.QUERY_CHECKGROUP_SUCCESS,checkGroups);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(true,MessageConstant.QUERY_CHECKGROUP_FAIL);
+            return new Result(false,MessageConstant.QUERY_CHECKGROUP_FAIL);
+        }
+    }
+
+    /**
+     * 查询全部检查组信息
+     */
+    @RequestMapping("/findSetmealByCheckgroupId")
+    public Result findSetmealByCheckgroupId(Integer checkgroupId ) {
+        try {
+            checkGroupService.findSetmealByCheckgroupId(checkgroupId);
+            return new Result(true,"存在表数据");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,"没有表数据");
+        }
+    }
+
+    /**
+     * 查询全部检查组信息
+     */
+    @RequestMapping("/deleteAnyWhere")
+    public Result deleteAnyWhere(Integer checkgroupId ) {
+        try {
+            checkGroupService.deleteAnyWhere(checkgroupId);
+            return new Result(true,MessageConstant.DELETE_CHECKGROUP_SUCCESS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.DELETE_CHECKGROUP_FAIL);
         }
     }
 }

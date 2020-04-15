@@ -340,6 +340,7 @@
                     this.tableData = resp.data.data
                 })
             },
+
             // 弹出编辑窗口
             handleUpdate(row) {
                 this.dialogFormVisible4Edit = true;
@@ -347,14 +348,16 @@
 
                 //    已有数据不推荐在查询数据库，推荐使用深拷贝直接将数据开辟空间拷贝双份,减小数据库消耗
 
+
+                // axios.get("/checkgroup/findById.do?id=" + row.id).then((resp) => {
+                //     if (resp.data.flag) {
+                //         this.formData = resp.data.data;
+                //     } else {
+                //         this.$message.error(resp.data.message);
+                //     }
+                // })
                 //查询检查组信息
-                axios.get("/checkgroup/findById.do?id=" + row.id).then((resp) => {
-                    if (resp.data.flag) {
-                        this.formData = resp.data.data;
-                    } else {
-                        this.$message.error(resp.data.message);
-                    }
-                })
+                this.formData = this.deepClone(row);
 
                 //    查询检查项信息
                 axios.get("/checkitem/findAll.do").then((resp) => {
@@ -376,6 +379,21 @@
 
 
             },
+            //深拷贝
+            deepClone(source) {
+                const targetObj = source.constructor === Array ? [] : {};//判断复制的目标是数组还是对象
+                for (let keys in source) { //遍历目标自身的和继承的可枚举属性
+                    if (source.hasOwnProperty(keys)) {//仅对自身可枚举属性进行拷贝
+                        if (source[keys] && typeof source[keys] === 'object') {//如果值是对象，就递归一下
+                            targetObj[keys] = source[keys].constructor === Array ? [] : {};
+                            targetObj[keys] = deepClone(source[keys]);//递归调用
+                        } else { //如果不是，就直接赋值
+                            targetObj[keys] = source[keys];
+                        }
+                    }
+                }
+                return targetObj;
+            },
             //切换页码
             handleCurrentChange(currentPage) {
                 this.pagination.currentPage = currentPage;
@@ -383,24 +401,49 @@
             },
             // 删除
             handleDelete(row) {
-                this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-                    type: 'warning'
-                }).then(() => {
-                    axios.get("/checkgroup/deleteById.do?id="+row.id).then((resp)=>{
-                        if (resp.data.flag){
-                            this.$message.success(resp.data.message)
-                        }else{
-                            this.$message.error(resp.data.message)
-                        }
-                    })
-                }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '已取消删除'
-                    });
-                }).finally(()=>{
-                    this.findPage()
-                });
+                //发送请求查看是否与检查组有关联关系
+                axios.get("/checkgroup/findSetmealByCheckgroupId.do?checkgroupId="+row.id).then((resp)=>{
+                    if (resp.data.flag){
+                        //存在中间，提示不同内容，执行不同操作
+                        this.$confirm("该检查组已经添加到检查套餐，是否将其删除？","提示",{
+                            type: 'warning'
+                        }).then(()=>{
+                            axios.get("/checkgroup/deleteAnyWhere.do?checkgroupId="+row.id).then((resp)=>{
+                                this.$message({
+                                    type:resp.data.flag?"success":"error",
+                                    message:resp.data.message
+                                })
+                            })
+                        }).catch(() => {
+                            this.$message({
+                                type: 'info',
+                                message: '已取消删除'
+                            });
+                        }).finally(()=>{
+                            this.findPage()
+                        });
+                    }else {
+                        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                            type: 'warning'
+                        }).then(() => {
+                            axios.get("/checkgroup/deleteById.do?id="+row.id).then((resp)=>{
+                                if (resp.data.flag){
+                                    this.$message.success(resp.data.message)
+                                }else{
+                                    this.$message.error(resp.data.message)
+                                }
+                            })
+                        }).catch(() => {
+                            this.$message({
+                                type: 'info',
+                                message: '已取消删除'
+                            });
+                        }).finally(()=>{
+                            this.findPage()
+                        });
+                    }
+                })
+
 
             }
         }

@@ -115,6 +115,18 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     }
 
     /**
+     * 查询中间表数据，用于删除回显
+     * @param checkgroupId
+     */
+    @Override
+    public void findSetmealByCheckgroupId(Integer checkgroupId) {
+        List<Integer> setmealIds =  mapper.findSetmealByCheckgroupId(checkgroupId);
+        if (setmealIds == null || setmealIds.isEmpty()){
+            throw new RuntimeException();
+        }
+    }
+
+    /**
      * 添加关联关系
      * @param checkgroupId
      * @param checkitemIds
@@ -123,5 +135,17 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         for (Integer checkitemId : checkitemIds) {
             mapper.addByCheckItemId(checkgroupId,checkitemId);
         }
+    }
+
+    /**
+     * 删除任意位置检查组数据
+     * @param checkgroupId
+     */
+    @Override
+    public void deleteAnyWhere(Integer checkgroupId) {
+        //删除检查套餐中间关系
+        mapper.deleteSetmealByCheckgroupId(checkgroupId);
+        //删除检查组
+        deleteById(checkgroupId);
     }
 }

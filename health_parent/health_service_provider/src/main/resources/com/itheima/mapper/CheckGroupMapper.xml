@@ -46,7 +46,9 @@
             <if test="code != null">
                 code = #{code},
             </if>
-
+            <if test="price != null">
+                price = #{price},
+            </if>
             <if test="helpCode != null">
                 helpCode = #{helpCode},
             </if>
@@ -55,6 +57,9 @@
             </if>
             <if test="remark != null">
                 remark = #{remark},
+            </if>
+            <if test="img != null">
+                img = #{img},
             </if>
         </set>
         where id = #{id}
@@ -73,5 +78,15 @@
     <!--查询所有检查组-->
     <select id="findAll"  resultType="checkGroup">
         select * from t_checkgroup
+    </select>
+
+    <!--根据检查组id查询中间表关系-->
+    <select id="findSetmealByCheckgroupId" parameterType="int" resultType="int">
+        SELECT setmeal_id from t_setmeal_checkgroup where checkgroup_id = #{checkgroupId}
+    </select>
+
+    <!--根据检查组id查询中间表关系-->
+    <select id="deleteSetmealByCheckgroupId" parameterType="int">
+        DELETE  from t_setmeal_checkgroup where checkgroup_id = #{checkgroupId}
     </select>
 </mapper>

@@ -11,6 +11,7 @@ import com.qiniu.util.Auth;
 import org.junit.Test;
 
 
+@SuppressWarnings("all")
 
 //七牛云图片上传
 public class ImgTest {
@@ -29,8 +30,8 @@ public class ImgTest {
         String localFilePath = ImgTest.class.getResource("/abc.png").getPath();
 //      默认不指定key的情况下，以文件内容的hash值作为文件名
         String key = null;
+        //      upToken：上传令牌，动态生成的令牌只能存在1-2分钟，即使访问数据被拦截，被破坏的程度可以降低
         Auth auth = Auth.create(accessKey, secretKey);
-//      upToken：上传令牌，动态生成的令牌只能存在1-2分钟，即使访问数据被拦截，被破坏的程度可以降低
         String upToken = auth.uploadToken(bucket);
         try {
             Response response = uploadManager.put(localFilePath, key, upToken);

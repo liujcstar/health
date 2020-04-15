@@ -1,0 +1,81 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.mapper.SetmealMapper">
+
+    <!--添加菜单-->
+    <insert id="add" parameterType="setmeal">
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            select last_insert_id();
+        </selectKey>
+        insert into t_setmeal(code,name,sex,helpCode,remark,attention,age,price,img)
+        values
+        (#{code},#{name},#{sex},#{helpCode},#{remark},#{attention},#{age},#{price},#{img})
+    </insert>
+
+    <!--添加中间关系-->
+    <insert id="setSetmealAndCheckGroup">
+        insert into t_setmeal_checkgroup(setmeal_id,checkgroup_id)
+        values
+        (#{setmealId},#{checkgroupId})
+    </insert>
+    
+    <select id="findPage" resultType="setmeal" parameterType="string">
+        select * from t_setmeal
+        <if test="value != null and value.length > 0">
+            where code = #{value} or helpCode = #{value} or name like concat('%' , #{value} , '%')
+        </if>
+    </select>
+
+    <!--根据id删除中间关系表-->
+    <delete id="delAssociationBySetmealId" parameterType="int">
+        delete from t_setmeal_checkgroup where setmeal_id = #{id}
+    </delete>
+
+    <!--删除检查套餐-->
+    <delete id="delSetmealById" parameterType="int">
+        DELETE from t_setmeal where id = #{id}
+    </delete>
+
+    <!--根据检查套餐id查询出检查组id-->
+    <select id="findCheckgroupIdBySetmealId" parameterType="int" resultType="int">
+        select checkgroup_id from t_setmeal_checkgroup  where setmeal_id = #{id}
+    </select>
+
+    <!--根据id查询检查台词-->
+    <select id="findById" parameterType="int" resultType="setmeal">
+        SELECT * from t_setmeal where id = #{id}
+    </select>
+
+    <!--编辑套餐-->
+    <select id="edit" parameterType="setmeal">
+        update t_setmeal
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="code != null">
+                code = #{code},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="helpCode != null">
+                helpCode = #{helpCode},
+            </if>
+            <if test="attention != null">
+                attention = #{attention},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="img != null">
+                img = #{img}
+            </if>
+        </set>
+        where id = #{id}
+    </select>
+</mapper>
