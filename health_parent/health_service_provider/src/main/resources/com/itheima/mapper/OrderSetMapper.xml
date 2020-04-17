@@ -1,0 +1,41 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.mapper.OrderSetMapper">
+
+
+    <!--根据月份查询订单预约-->
+    <select id="findByCurrentMonth" resultType="map" parameterType="string">
+        SELECT DATE_FORMAT(orderDate,"%d") date ,number,reservations
+        FROM t_ordersetting
+        WHERE orderDate LIKE concat(#{value},'%');
+    </select>
+
+    <!--查询是否有数据-->
+    <select id="selectByDate" parameterType="String" resultType="int">
+        SELECT count(id)
+        FROM t_ordersetting
+        WHERE orderDate = #{orderDate}
+    </select>
+
+    <!--添加数据-->
+    <insert id="addOrderSettingByDate" parameterType="OrderSetting">
+        insert into t_ordersetting values(null,#{orderDate},#{number},#{reservations})
+    </insert>
+
+    <!--更新数据-->
+    <update id="updateOrderSettingByDate" parameterType="OrderSetting">
+        update t_ordersetting set number = #{number} where orderDate = #{orderDate}
+    </update>
+
+    <!--修改预约数据-->
+<!--    <update id="editNumberByDate" parameterType="OrderSetting">
+        update t_ordersetting set number = #{number} where orderDate = #{orderDate}
+    </update>-->
+
+    <select id="findCountByDate" parameterType="date" resultType="long">
+        SELECT count(id)
+        FROM t_ordersetting
+        WHERE orderDate = #{orderDate}
+    </select>
+</mapper>

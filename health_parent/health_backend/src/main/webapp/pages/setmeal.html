@@ -446,14 +446,14 @@
             // },
 
 
-//深拷贝递归函数（只对自身的可枚举类型的属性进行拷贝）
+            //深拷贝递归函数（只对自身的可枚举类型的属性进行拷贝）
             deepClone(source) {
                 const targetObj = source.constructor === Array ? [] : {};//判断复制的目标是数组还是对象
                 for (let keys in source) { //遍历目标自身的和继承的可枚举属性
                     if (source.hasOwnProperty(keys)) {//仅对自身可枚举属性进行拷贝
                         if (source[keys] && typeof source[keys] === 'object') {//如果值是对象，就递归一下
                             targetObj[keys] = source[keys].constructor === Array ? [] : {};
-                            targetObj[keys] = deepClone(source[keys]);//递归调用
+                            targetObj[keys] =this.deepClone(source[keys]);//递归调用
                         } else { //如果不是，就直接赋值
                             targetObj[keys] = source[keys];
                         }

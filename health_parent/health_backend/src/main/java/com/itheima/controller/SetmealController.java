@@ -120,6 +120,10 @@ public class SetmealController {
         addRedis(oldImg);
     }
 
+    /**
+     * 添加到redis
+     * @param imgName
+     */
     public void addRedis(String imgName){
         Jedis resource = jedisPool.getResource();
         resource.sadd(RedisConstant.SETMEAL_PIC_RESOURCES,imgName);
