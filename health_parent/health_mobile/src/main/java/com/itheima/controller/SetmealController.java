@@ -18,6 +18,10 @@ public class SetmealController {
     @Reference
     private SetmealService setmealService;
 
+    /**
+     * 查询列表信息
+     * @return
+     */
     @RequestMapping("/getSetmeal")
     public Result getSetmeal(){
         try {
@@ -29,6 +33,11 @@ public class SetmealController {
         }
     }
 
+    /**
+     * 查询 详细信息
+     * @param id
+     * @return
+     */
     @RequestMapping("/findAllById")
     public Result findAllById(int id){
         try {

@@ -23,7 +23,7 @@ public class ClearImgJob {
             resource.del(RedisConstant.SETMEAL_PIC_RESOURCES);
             resource.del(RedisConstant.SETMEAL_PIC_DB_RESOURCES);
             resource.close();
-            System.out.println("我好了。。。");
+//            System.out.println("我好了。。。");
         }
     }
 }
