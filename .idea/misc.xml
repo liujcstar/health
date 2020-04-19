@@ -15,6 +15,7 @@
       <list>
         <option value="$PROJECT_DIR$/health_parent/pom.xml" />
         <option value="$PROJECT_DIR$/Quartz_jobs/pom.xml" />
+        <option value="$PROJECT_DIR$/freeMarker/pom.xml" />
       </list>
     </option>
   </component>
