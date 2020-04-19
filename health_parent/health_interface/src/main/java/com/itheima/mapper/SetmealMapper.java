@@ -1,6 +1,7 @@
 package com.itheima.mapper;
 
 import com.github.pagehelper.Page;
+import com.itheima.pojo.CheckGroup;
 import com.itheima.pojo.Setmeal;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,4 +23,8 @@ public interface SetmealMapper {
     Setmeal findById(Integer setmealId);
 
     void edit(Setmeal setmeal);
+
+    List<CheckGroup> findCheckgroupBySetmealId(int id);
+
+    List<Setmeal> getSetmeal();
 }

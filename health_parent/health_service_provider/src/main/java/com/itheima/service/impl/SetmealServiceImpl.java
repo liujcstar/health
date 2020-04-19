@@ -6,16 +6,21 @@ import com.github.pagehelper.PageHelper;
 import com.itheima.constant.RedisConstant;
 import com.itheima.entity.PageResult;
 import com.itheima.entity.QueryPageBean;
+import com.itheima.mapper.CheckIteMapper;
 import com.itheima.mapper.SetmealMapper;
+import com.itheima.pojo.CheckGroup;
+import com.itheima.pojo.CheckItem;
 import com.itheima.pojo.DelSetmealPojo;
 import com.itheima.pojo.Setmeal;
 import com.itheima.service.SetmealService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Transactional
@@ -27,6 +32,8 @@ public class SetmealServiceImpl implements SetmealService {
 
     @Autowired
     private JedisPool jedisPool;
+    @Autowired
+    private CheckIteMapper checkIteMapper;
 
     @Override
     public void add(@RequestBody Setmeal setmeal, Integer[] checkgroupIds) {
@@ -113,6 +120,25 @@ public class SetmealServiceImpl implements SetmealService {
         //编辑套餐
         mapper.edit(setmeal);
         addDBRedis(setmeal.getImg());
+    }
+
+    public List<Setmeal> getSetmeal() {
+        return this.mapper.getSetmeal();
+    }
+
+    public Setmeal findAllById(int id) {
+        Setmeal setmeal = this.mapper.findById(id);
+        List<CheckGroup> checkGroups = this.mapper.findCheckgroupBySetmealId(id);
+        Iterator var4 = checkGroups.iterator();
+
+        while(var4.hasNext()) {
+            CheckGroup checkGroup = (CheckGroup)var4.next();
+            List<CheckItem> checkItems = this.checkIteMapper.findCheckItemByCheckGroupId(checkGroup.getId());
+            checkGroup.setCheckItems(checkItems);
+        }
+
+        setmeal.setCheckGroups(checkGroups);
+        return setmeal;
     }
 
 

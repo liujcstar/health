@@ -20,4 +20,6 @@ public interface CheckIteMapper {
     void deleteByCheckItemId(int id);
 
     List<CheckItem> findAll();
+
+    List<CheckItem> findCheckItemByCheckGroupId(Integer id);
 }
