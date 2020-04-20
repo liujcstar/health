@@ -60,3 +60,11 @@
 0:0:0:0:0:0:0:1 - - [19/Apr/2020:20:44:02 +0800] "POST /setmeal/findPage.do HTTP/1.1" 200 1813 http-bio-82-exec-8 22
 0:0:0:0:0:0:0:1 - - [19/Apr/2020:20:44:50 +0800] "GET /pages/main.html HTTP/1.1" 304 - http-bio-82-exec-9 2
 0:0:0:0:0:0:0:1 - - [19/Apr/2020:20:44:50 +0800] "GET /ordersetting/findByCurrentMonth.do?currentMonth=2020-04 HTTP/1.1" 200 281 http-bio-82-exec-1 16
+0:0:0:0:0:0:0:1 - - [19/Apr/2020:23:48:48 +0800] "GET /pages/setmeal.html HTTP/1.1" 304 - http-bio-82-exec-4 3
+0:0:0:0:0:0:0:1 - - [19/Apr/2020:23:48:48 +0800] "POST /setmeal/findPage.do HTTP/1.1" 200 1813 http-bio-82-exec-4 37
+0:0:0:0:0:0:0:1 - - [19/Apr/2020:23:48:50 +0800] "GET /checkgroup/findAll.do HTTP/1.1" 200 1529 http-bio-82-exec-4 16
+0:0:0:0:0:0:0:1 - - [19/Apr/2020:23:48:50 +0800] "GET /setmeal/findCheckgroupIdBySetmealId.do?setmealId=6 HTTP/1.1" 200 84 http-bio-82-exec-4 14
+0:0:0:0:0:0:0:1 - - [19/Apr/2020:23:48:53 +0800] "GET /checkgroup/findAll.do HTTP/1.1" 200 1529 http-bio-82-exec-8 13
+0:0:0:0:0:0:0:1 - - [19/Apr/2020:23:48:53 +0800] "GET /setmeal/findCheckgroupIdBySetmealId.do?setmealId=7 HTTP/1.1" 200 84 http-bio-82-exec-8 19
+0:0:0:0:0:0:0:1 - - [19/Apr/2020:23:48:58 +0800] "POST /setmeal/edit.do?checkgroupIds=5,6,7,8,9,10,11,12,13,14,15 HTTP/1.1" 200 56 http-bio-82-exec-8 112
+0:0:0:0:0:0:0:1 - - [19/Apr/2020:23:48:58 +0800] "POST /setmeal/findPage.do HTTP/1.1" 200 1813 http-bio-82-exec-8 19

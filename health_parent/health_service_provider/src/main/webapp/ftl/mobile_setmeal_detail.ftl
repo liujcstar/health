@@ -88,7 +88,7 @@
         el:'#app',
         methods:{
             toOrderInfo(){
-                window.location.href = "orderInfo.html?id=${setmeal.id}";
+                window.location.href = "orderInfo_id=${setmeal.id}.html";
             }
         }
     });

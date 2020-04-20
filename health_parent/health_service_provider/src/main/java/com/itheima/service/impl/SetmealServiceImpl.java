@@ -197,7 +197,7 @@ public class SetmealServiceImpl implements SetmealService {
         for (Setmeal setmeal1 : setmeal) {
             String htmlName = "setmeal_detail_"+ setmeal1.getId() +".html";
             Map map = new HashMap();
-            map.put("setmeal", setmeal1);
+            map.put("setmeal",findAllById(setmeal1.getId()));
             generateHtml("mobile_setmeal_detail.ftl",htmlName,map);
         }
     }
